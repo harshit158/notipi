@@ -1,6 +1,6 @@
 [project]
 name = "notipi"
-version = "0.0.1"
+version = "0.0.2"
 description = "A package to deliver notifications via your telegram bot"
 readme = "README.md"
 requires-python = ">=3.8"
@@ -14,4 +14,10 @@ requires = [ "setuptools",]
 build-backend = "setuptools.build_meta"
 
 [tool.setuptools.packages.find]
-where = [ "src",]
+where = ["src"]
+
+[project.scripts]
+noticli = "notipi.notipi:noticli"
+
+[project.urls]
+"Homepage" = "https://github.com/harshit158/notipi"

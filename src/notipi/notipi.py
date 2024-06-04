@@ -4,6 +4,9 @@ from telegram.ext import Updater
 import asyncio
 from dotenv import load_dotenv
 from functools import wraps
+import argparse
+import subprocess
+import shlex
 load_dotenv()
 
 def async_decorator(f):
@@ -34,3 +37,48 @@ def notify(msg: str):
         asyncio.run(send_msg(msg))
     except KeyError:
         print('Please set BOT_API_TOKEN and CHAT_ID environment variables')
+
+def run_cli(command_string):
+    try:
+        # Run the command
+        command = shlex.split(command_string)
+        result = subprocess.run(command, capture_output=True, text=True, check=True)
+
+        # Get the standard output, standard error, and return code
+        stdout = result.stdout
+        stderr = result.stderr
+        return_code = result.returncode
+
+        # Print the results
+        print("Standard Output:")
+        print(stdout)
+        print("Standard Error:")
+        print(stderr)
+        print("Return Code:", return_code)
+        
+        if return_code == 0:
+            notify(f"Finished: {command_string}")
+        else:
+            notify(f"Error: {command_string}")
+
+    except subprocess.CalledProcessError as e:
+        # Handle errors in case the command failed
+        display_string = f"An error occurred while running the command. {command_string}"
+        print(display_string)
+        notify(display_string)
+        print("Error Output:", e.stderr)
+        print("Return Code:", e.returncode)
+
+def noticli():
+    parser = argparse.ArgumentParser(description="Run a command and check its status.")
+    parser.add_argument("-c", "--command", help="The command to run", nargs=argparse.REMAINDER)
+    args = parser.parse_args()
+
+    if not args.command:
+        print("Please provide a command to run.")
+        return
+    
+    run_cli(' '.join(args.command))
+
+if __name__ == "__main__":
+    noticli()
