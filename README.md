@@ -1,3 +1,6 @@
+![PyPI - Downloads](https://img.shields.io/pypi/dm/notipi) ![PyPI - Version](https://img.shields.io/pypi/v/notipi)
+
+
 ## Installation
     $ pip install notipi 
 
