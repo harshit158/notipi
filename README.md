@@ -1,5 +1,8 @@
 ![PyPI - Downloads](https://img.shields.io/pypi/dm/notipi) ![PyPI - Version](https://img.shields.io/pypi/v/notipi)
 
+<p align="center">
+  <img src="assets/logo.png" alt="Logo" width="600"/>
+</p>
 
 ## Installation
     $ pip install notipi 
