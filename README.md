@@ -12,9 +12,14 @@ In order to use notipi library - you would be needing two environment variables:
 
 <u>To get `BOT_API_TOKEN`:</u>
 
-- In the telegram app, initiate conversation with `@BotFather` and follow the instructions to create a new bot and get the `BOT_API_TOKEN`<br>
-- You will be required to enter bot's account name and username.
-- Detailed instructions can be found at [Telegram website](https://core.telegram.org/bots/features#creating-a-new-bot:~:text=and%20managing%20bots.-,Creating%20a%20new%20bot,-Use%20the%20/newbot)
+- In the telegram app, initiate conversation with `@BotFather` (you can also click [here](https://t.me/BotFather)).
+- Send `/newbot` as the message to `@BotFather` and provide a new name and username for your bot account as per the instructions.
+- `@BotFather` will reply with a unique api token - this is your `BOT_API_TOKEN` <br>
+(Note: Detailed instructions to create a new bot can be found at [Telegram website](https://core.telegram.org/bots/features#creating-a-new-bot:~:text=and%20managing%20bots.-,Creating%20a%20new%20bot,-Use%20the%20/newbot))
+
+<p align="center">
+  <img src="assets/bot_creation_steps.jpeg" alt="Logo" width="600"/>
+</p>
 
 <u>To get `CHAT_ID`:</u>
 - Once a new bot is created, send a dummy message to the bot via Telegram app so that your chat gets assigned an ID. <br>
