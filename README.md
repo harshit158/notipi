@@ -41,13 +41,39 @@ Once the `BOT_API_TOKEN` and `CHAT_ID` are obtained, set the environment variabl
 
 ## Usage
 
-Once the required environment variables are in place, following script can be used to send messages to your telegram app.
+Once the required environment variables are in place, you can use `notipi` in the following ways to send messages via Telegram
+
+### (1) As a regular function
 
 ```python
 from notipi.notipi import notify
 
-def example():
+def func():
     for i in range(1000):
         if i%100==0:
             notify(f"Currently at {i}")
 ```
+
+### (2) As a decorator
+```python
+from notipi.notipi import notify
+
+@notify
+def func():
+    for i in range(1000):
+        pass
+```
+
+When `func()` is invoked - you will be notified once it finishes execution
+
+`NOTE`: Both Approaches (1) and (2) are compatible inside Jupyter Notebook as well
+
+<p align="left">
+  <img src="assets/notebook_screenshot.jpg" alt="Logo" width="900"/>
+</p>
+
+Once `func3()` is invoked - you will receive two notifications - first one after `func1()` is processed and second one after `func2()` is executed.
+
+### (3) As a command line tool
+    $ noticli -c python example.py
+A notification will be sent once `example.py` finishes execution
