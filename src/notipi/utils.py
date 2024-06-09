@@ -15,7 +15,7 @@ def require_envs(*envs):
             if unset_vars:
                 print(f'Please set these env variables: {unset_vars}')
                 return
-            func(*args, **kwargs)
+            return func(*args, **kwargs)
         return wrapper
     return outer_wrapper
 
