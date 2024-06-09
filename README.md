@@ -69,7 +69,7 @@ When `func()` is invoked - you will be notified once it finishes execution
 `NOTE`: Both Approaches (1) and (2) are compatible inside Jupyter Notebook as well
 
 <p align="left">
-  <img src="assets/notebook_screenshot.jpg" alt="Logo" width="900"/>
+  <img src="assets/notebook_screenshot.jpg" width="900"/>
 </p>
 
 Once `func3()` is invoked - you will receive two notifications - first one after `func1()` is processed and second one after `func2()` is executed.
