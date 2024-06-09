@@ -1,6 +1,7 @@
 import os
 import asyncio
 from functools import wraps
+from IPython import get_ipython
 
 def require_envs(*envs):
     """Decorator to check for required environment variables
@@ -25,3 +26,12 @@ def async_decorator(f):
         ret = asyncio.run(f(*args, **kwargs))
         return ret
     return wrapper
+
+def is_notebook():
+    try:
+        if 'IPKernelApp' in get_ipython().config:  # pragma: no cover
+            return True
+        else:
+            return False
+    except AttributeError:
+        return False

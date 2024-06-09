@@ -6,7 +6,11 @@ from functools import wraps
 import argparse
 import subprocess
 import shlex
-from .utils import require_envs, async_decorator
+from .utils import require_envs, async_decorator, is_notebook
+import asyncio
+import nest_asyncio
+from typing import Optional, Callable
+
 # load_dotenv()
 
 @async_decorator
@@ -17,15 +21,21 @@ async def get_chat_id(token: str):
         print('Updates not found. Try sending a dummy message to your bot.')
     print(f'Your CHAT ID: {updates[0].message.chat.id}')
 
-@async_decorator
 async def send_msg(message: str):
     bot = telegram.Bot(os.environ['BOT_API_TOKEN'])
     async with bot:
         await bot.send_message(text=message, chat_id=os.environ['CHAT_ID'])
 
 @require_envs('BOT_API_TOKEN', 'CHAT_ID')
-def notify(message: str):
-    send_msg(message)
+def notify(arg: Optional[Callable, str]):
+    if is_notebook():
+        loop = asyncio.get_event_loop()
+        if loop.is_running():
+            return asyncio.ensure_future(send_msg(message))  # Schedule the coroutine
+        else:
+            loop.run_until_complete(send_msg(message))
+    else:
+        asyncio.run(send_msg(message))
 
 def run_cli(command_string):
     try:
