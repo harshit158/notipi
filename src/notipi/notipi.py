@@ -10,8 +10,7 @@ from .utils import require_envs, async_decorator, is_notebook
 import asyncio
 import nest_asyncio
 from typing import Optional, Callable, Union
-
-# load_dotenv()
+from notipi.notify_macos import display_notification
 
 @async_decorator
 async def get_chat_id(token: str):
@@ -21,6 +20,9 @@ async def get_chat_id(token: str):
         print('Updates not found. Try sending a dummy message to your bot.')
     print(f'Your CHAT ID: {updates[0].message.chat.id}')
 
+def send_macos_msg(message: str):
+    display_notification(message, title="Notipi")
+
 async def send_msg(message: str):
     bot = telegram.Bot(os.environ['BOT_API_TOKEN'])
     async with bot:
@@ -29,30 +31,40 @@ async def send_msg(message: str):
 @require_envs('BOT_API_TOKEN', 'CHAT_ID')
 def notify(arg: Optional[Union[Callable, str]] = None):
     if callable(arg):
+        # If used as a decorator : @notify
         @wraps(arg)
         def wrapper(*args, **kwargs):
             result = arg(*args, **kwargs)
             message = f'Finished executing: {arg.__name__}'
-            if is_notebook():
-                loop = asyncio.get_event_loop()
-                if loop.is_running():    
-                    asyncio.ensure_future(send_msg(message))  # Schedule the coroutine
+            send_macos_msg(message)
+            
+            # Proceed only if Telegram is to be used
+            if eval(os.environ.get('SEND_TO_TELEGRAM')):
+                if is_notebook():
+                    loop = asyncio.get_event_loop()
+                    if loop.is_running():    
+                        asyncio.ensure_future(send_msg(message))  # Schedule the coroutine
+                    else:
+                        loop.run_until_complete(send_msg(message))
                 else:
-                    loop.run_until_complete(send_msg(message))
-            else:
-                asyncio.run(send_msg(message))
+                    asyncio.run(send_msg(message))
             return result
         return wrapper
     else:
+        # If used as a standalone function: notify(msg)
         arg = 'Finished Task' if arg is None else arg
-        if is_notebook():
-            loop = asyncio.get_event_loop()
-            if loop.is_running():
-                return asyncio.ensure_future(send_msg(arg))  # Schedule the coroutine
+        send_macos_msg(arg)
+        
+        # Proceed only if Telegram is to be used
+        if eval(os.environ.get('SEND_TO_TELEGRAM')):
+            if is_notebook():
+                loop = asyncio.get_event_loop()
+                if loop.is_running():
+                    return asyncio.ensure_future(send_msg(arg))  # Schedule the coroutine
+                else:
+                    loop.run_until_complete(send_msg(arg))
             else:
-                loop.run_until_complete(send_msg(arg))
-        else:
-            asyncio.run(send_msg(arg))
+                asyncio.run(send_msg(arg))
 
 def run_cli(command_string):
     try:

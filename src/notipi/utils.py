@@ -13,8 +13,9 @@ def require_envs(*envs):
                 if os.environ.get(env) == None:
                     unset_vars.append(env)
             if unset_vars:
-                print(f'Please set these env variables: {unset_vars}')
-                return
+                os.environ["SEND_TO_TELEGRAM"]='False'
+            else:
+                os.environ["SEND_TO_TELEGRAM"]='True'
             return func(*args, **kwargs)
         return wrapper
     return outer_wrapper

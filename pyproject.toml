@@ -1,6 +1,6 @@
 [project]
 name = "notipi"
-version = "1.0.0"
+version = "1.1.0"
 description = "A PyPI package to deliver notifications via your own telegram bot"
 readme = "README.md"
 requires-python = ">=3.9"
@@ -15,6 +15,9 @@ build-backend = "setuptools.build_meta"
 
 [tool.setuptools.packages.find]
 where = ["src"]
+
+[tool.setuptools.package-data]
+"notipi" = ["sounds/*.mp3"]
 
 [project.scripts]
 noticli = "notipi.notipi:noticli"
