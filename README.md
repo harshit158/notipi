@@ -4,11 +4,21 @@
   <img src="assets/logo.png" alt="Logo" width="600"/>
 </p>
 
+## Introduction
+
+`notipi` is a python library to send custom notifications on Telegram and MacOS<br>
+
+Use cases include:
+- Getting notified whenever a long running scripts finishes execution
+- Knowing whenever a milestone is reached during ML / DL trainings
+
 ## Installation
     $ pip install notipi 
 
 ## Setup
-In order to use notipi library - you would be needing two environment variables: `BOT_API_TOKEN` and `CHAT_ID`
+If you wish to use just the MacOS notifications and not Telegram - you don't need anymore steps and start using the library right away. Refer the Usage examples below.
+
+To use Telegram - you would be needing two environment variables: `BOT_API_TOKEN` and `CHAT_ID`
 
 <u>To get `BOT_API_TOKEN`:</u>
 
@@ -41,7 +51,8 @@ Once the `BOT_API_TOKEN` and `CHAT_ID` are obtained, set the environment variabl
 
 ## Usage
 
-Once the required environment variables are in place, you can use `notipi` in the following ways to send messages via Telegram
+Once the required environment variables are in place, you can use `notipi` in the following ways to send messages via Telegram. <br>
+(**NOTE**: If the environment variables are not set - the messages will be sent only via MacOS notifications by default)
 
 ### (1) As a regular function
 
