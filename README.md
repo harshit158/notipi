@@ -88,3 +88,7 @@ Once `func3()` is invoked - you will receive two notifications - first one after
 ### (3) As a command line tool
     $ noticli -c python example.py
 A notification will be sent once `example.py` finishes execution
+
+
+## Roadmap
+- Extend compatibility to Windows platforms    
